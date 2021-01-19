@@ -14,7 +14,7 @@ public class Map : MonoBehaviour
 
     private readonly float TileWidth = 2.0427f; //1.909090909090909
     private readonly float TileHeight = 1.07f;
-
+    public GameObject con;
     private MapTile[,] mapTileList;
    public  void Init(int row, int col)
     {
@@ -22,6 +22,7 @@ public class Map : MonoBehaviour
         //col = 5;
         map = GameObject.Find("GameObject");
         mapTile = Resources.Load<GameObject>("mapTile");
+      
         this.row = row;
         this.col = col;
         mapTileList = new MapTile[row, col];
@@ -42,10 +43,10 @@ public class Map : MonoBehaviour
 
                 MapTile tile = tmp.GetComponent<MapTile>();
                 tile.setXY(i, j);
-                // Debug.DrawLine(new Vector3(x- TileWidth / 2, y + TileHeight / 2), new Vector3(x + TileWidth / 2, y + TileHeight / 2), Color.red,100000);
-                // Debug.DrawLine(new Vector3(x - TileWidth / 2, y - TileHeight / 2), new Vector3(x + TileWidth / 2, y - TileHeight / 2), Color.red,10000);
-                // Debug.DrawLine(new Vector3(x - TileWidth / 2, y + TileHeight / 2), new Vector3(x - TileWidth / 2, y - TileHeight / 2), Color.red,10000);
-                // Debug.DrawLine(new Vector3(x + TileWidth / 2, y - TileHeight / 2), new Vector3(x + TileWidth / 2, y + TileHeight / 2), Color.red,10000);
+                Debug.DrawLine(new Vector3(x - TileWidth / 2, y + TileHeight / 2), new Vector3(x + TileWidth / 2, y + TileHeight / 2), Color.red, 100000);
+                Debug.DrawLine(new Vector3(x - TileWidth / 2, y - TileHeight / 2), new Vector3(x + TileWidth / 2, y - TileHeight / 2), Color.red, 10000);
+                Debug.DrawLine(new Vector3(x - TileWidth / 2, y + TileHeight / 2), new Vector3(x - TileWidth / 2, y - TileHeight / 2), Color.red, 10000);
+                Debug.DrawLine(new Vector3(x + TileWidth / 2, y - TileHeight / 2), new Vector3(x + TileWidth / 2, y + TileHeight / 2), Color.red, 10000);
                 mapTileList[i, j] = tile;
             }
 
@@ -60,8 +61,9 @@ public class Map : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             MapTile tile = getGameXY(Input.mousePosition);
-
-            tile.GetComponent<Renderer>().material.color = Color.red;
+            // tile.GetComponent<Renderer>().material.color = Color.red;
+          
+            tile.GetComponent<SpriteRenderer>().sprite =Resources.Load<Sprite>("building_yinxiang_T");
         }
         //  if (mapTileList.Length > 0)
         //   {
@@ -90,7 +92,6 @@ public class Map : MonoBehaviour
         p.y = p.y + row * 0.3f;
         int x = (int)Mathf.Round(0.5f * (p.y / (TileHeight / 2) - p.x / (TileWidth / 2)));
         int y = (int)Mathf.Round(0.5f * (p.y / (TileHeight / 2) + p.x / (TileWidth / 2)));
-
         Debug.Log(x + "  " + y);
 
         //根据矩形算出来的图快
